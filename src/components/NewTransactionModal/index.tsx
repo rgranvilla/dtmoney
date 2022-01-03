@@ -1,6 +1,7 @@
 import { FormEvent, useState } from 'react';
 import Modal from 'react-modal';
 import { DtClose, DtIncome, DtOutcome } from '../../icons/dtMoney';
+import { api } from '../../services/api';
 import { Container, RadioBox, TransactionsTypeContainer } from './styles';
 
 type NewTransactionModalProps = {
@@ -19,6 +20,15 @@ export function NewTransactionModal({
 
   function handleCreateNewTransaction(event: FormEvent) {
     event.preventDefault();
+
+    const data = {
+      title,
+      value,
+      category,
+      type,
+    };
+
+    api.post(`/transactions`, data);
   }
 
   return (
@@ -41,13 +51,17 @@ export function NewTransactionModal({
         <input
           placeholder="Título"
           value={title}
-          onChange={event => setTitle(event.target.value)}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setTitle(event.target.value)
+          }
         />
         <input
           placeholder="Valor"
           type="number"
           value={value}
-          onChange={event => setValue(Number(event.target.value))}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setValue(Number(event.target.value))
+          }
         />
 
         <TransactionsTypeContainer>
@@ -83,7 +97,9 @@ export function NewTransactionModal({
         <input
           placeholder="Categoria"
           value={category}
-          onChange={event => setCategory(event.target.value)}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setCategory(event.target.value)
+          }
         />
         <button type="submit">Cadastrar</button>
       </Container>
