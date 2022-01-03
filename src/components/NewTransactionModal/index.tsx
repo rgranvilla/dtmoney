@@ -1,7 +1,7 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useState, useContext } from 'react';
 import Modal from 'react-modal';
 import { DtClose, DtIncome, DtOutcome } from '../../icons/dtMoney';
-import { api } from '../../services/api';
+import { TransactionsContext } from '../../TransactionsContext';
 import { Container, RadioBox, TransactionsTypeContainer } from './styles';
 
 type NewTransactionModalProps = {
@@ -13,22 +13,21 @@ export function NewTransactionModal({
   isOpen,
   onRequestClose,
 }: NewTransactionModalProps) {
+  const { createTransaction } = useContext(TransactionsContext);
+
   const [title, setTitle] = useState('');
-  const [value, setValue] = useState(0);
+  const [amount, setAmount] = useState(0);
   const [category, setCategory] = useState('');
-  const [type, setType] = useState('deposit');
+  const [type, setType] = useState<'deposit' | 'withdraw'>('deposit');
 
   function handleCreateNewTransaction(event: FormEvent) {
     event.preventDefault();
-
-    const data = {
+    createTransaction({
       title,
-      value,
+      amount,
       category,
       type,
-    };
-
-    api.post(`/transactions`, data);
+    });
   }
 
   return (
@@ -58,9 +57,9 @@ export function NewTransactionModal({
         <input
           placeholder="Valor"
           type="number"
-          value={value}
+          value={amount}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-            setValue(Number(event.target.value))
+            setAmount(Number(event.target.value))
           }
         />
 
