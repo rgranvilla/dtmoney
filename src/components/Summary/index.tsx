@@ -1,7 +1,13 @@
+import { useContext } from 'react';
 import { DtIncome, DtOutcome, DtTotal } from '../../icons/dtMoney';
+import { TransactionsContext } from '../../TransactionsContext';
+
 import { Container } from './styles';
 
 export function Summary() {
+  const transactions = useContext(TransactionsContext);
+
+  console.log(transactions);
   return (
     <Container>
       <div>
