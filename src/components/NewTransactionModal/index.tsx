@@ -1,4 +1,5 @@
 import Modal from 'react-modal';
+import { DtClose } from '../../icons/dtMoney';
 import { Container } from './styles';
 
 type NewTransactionModalProps = {
@@ -17,6 +18,13 @@ export function NewTransactionModal({
       overlayClassName="react-modal-overlay"
       className="react-modal-content"
     >
+      <button
+        type="button"
+        onClick={onRequestClose}
+        className="react-modal-close"
+      >
+        <DtClose size={40} color="inherit" />
+      </button>
       <Container>
         <h2>Cadastrar transação</h2>
 
