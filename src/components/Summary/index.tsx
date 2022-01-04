@@ -1,11 +1,10 @@
-import { useContext } from 'react';
+import { useTransactions } from '../../hooks/useTransactions';
 import { DtIncome, DtOutcome, DtTotal } from '../../icons/dtMoney';
-import { TransactionsContext } from '../../TransactionsContext';
 
 import { Container } from './styles';
 
 export function Summary() {
-  const { transactions } = useContext(TransactionsContext);
+  const { transactions } = useTransactions();
 
   const summary = transactions.reduce(
     (acc, transaction) => {
@@ -25,8 +24,6 @@ export function Summary() {
       total: 0,
     },
   );
-
-  console.log(transactions);
   return (
     <Container>
       <div>
